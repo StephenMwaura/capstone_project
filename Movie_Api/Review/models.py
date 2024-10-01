@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Movie(models.Model):
-    title = models.CharField(max_length=50)
+    title = models.CharField(max_length=50 ,unique=True)
     description = models.CharField(max_length=400)
     release_date = models.DateField()
  

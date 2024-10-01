@@ -139,12 +139,15 @@
     margin: 0 0 0 30px;
 }
 
+<<<<<<< HEAD
 @media (forced-colors: active) {
   #changelist-filter {
       border: 1px solid;
   }
 }
 
+=======
+>>>>>>> ad9ce090fde417af1936af4b15024bd1c464cb06
 #changelist-filter h2 {
     font-size: 0.875rem;
     text-transform: uppercase;
@@ -159,6 +162,10 @@
     font-weight: 400;
     padding: 0 15px;
     margin-bottom: 10px;
+<<<<<<< HEAD
+=======
+    cursor: pointer;
+>>>>>>> ad9ce090fde417af1936af4b15024bd1c464cb06
 }
 
 #changelist-filter details summary > * {

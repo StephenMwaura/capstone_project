@@ -273,7 +273,10 @@ select.admin-autocomplete {
     display: block;
     padding: 6px;
 }
+<<<<<<< HEAD
 
 .errors .select2-selection {
     border: 1px solid var(--error-fg);
 }
+=======
+>>>>>>> ad9ce090fde417af1936af4b15024bd1c464cb06
