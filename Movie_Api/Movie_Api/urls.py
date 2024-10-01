@@ -17,9 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.authtoken import views
+from django.views.generic import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/',include('Review.urls')),
-    path( 'api-token-auth/', views.obtain_auth_token, name='api_token_auth') # this will allow users to send their username and password and receive aa token in response
+    path( 'api-token-auth/', views.obtain_auth_token, name='api_token_auth'), # this will allow users to send their username and password and receive aa token in response
+    path('',RedirectView.as_view(url='/api/', permanent=False)),
+
 ]
