@@ -51,10 +51,10 @@ class UserSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.ModelSerializer):
      user = serializers.CharField(source='user.username',read_only=True)
      review_content = serializers.CharField(source='review.review_content',read_only = True) # displays the movie title as a string field
-     movie_name = serializers.CharField(source='review.movie.titel',read_only = True)
+     movie_name = serializers.CharField(source='review.movie.title',read_only = True)
      class Meta:
           model = Comment
-          fields = ['id','movie_name','review_content','content','user','review_content', 'created_date']
+          fields = ['id','movie_name','review_content','content','user','review', 'created_date']
 
 
 
