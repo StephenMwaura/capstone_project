@@ -49,22 +49,35 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
+     user = serializers.CharField(source='user.username',read_only=True)
+     review_content = serializers.CharField(source='review.review_content',read_only = True) # displays the movie title as a string field
+     movie_name = serializers.CharField(source='review.movie.titel',read_only = True)
      class Meta:
           model = Comment
-          fields = ['id','content', 'created_date','review']
+          fields = ['id','movie_name','review_content','content','user','review_content', 'created_date']
 
 
 
 class MoviereviewSerializer(serializers.ModelSerializer):
+    created_date = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
     likes_count = serializers.SerializerMethodField() # count the number of likes a movie review has
     is_liked = serializers.SerializerMethodField() # show if the current user has liked this movie
-    movie_name= serializers.CharField(source='movie_title',read_only = True) # displays the movie title as a string field
-    comments = CommentSerializer(many=True,read_only=True) # displays
+    movie_name = serializers.CharField(source='movie.title',read_only = True) # displays the movie title as a string field
+    user = serializers.CharField(source='user.username',read_only = True) # displays the user
+    comments = CommentSerializer(many=True,read_only=True) 
+    movie = serializers.CharField(write_only = True)
     class Meta:
         model = Moviereview
-        fields = ['id','movie', 'review_content' ,'rating', 'created_date', 'user','likes_count','is_liked','comments','movie_name']
+        fields = ['id','movie','movie_name', 'review_content' ,'rating', 'created_date', 'user','likes_count','is_liked','comments']
         read_only_fields = ['likes_count', 'is_liked','user', 'created_date'] # these fields are not meant to be modified by the user
 
+
+    def validate_movie(self, value):
+          try:
+                movie = Movie.objects.get(title=value)
+          except Movie.DoesNotExist:
+                raise serializers.ValidationError("Movie not found")
+          return movie
     def create(self, validated_data):
          movie = validated_data.pop('movie')
          review = Moviereview.objects.create(movie=movie,**validated_data) # creates a new movie review and returns it
