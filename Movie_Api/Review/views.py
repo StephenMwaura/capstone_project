@@ -18,17 +18,17 @@ from .permissions import IsAuthorOrReadOnly
 
 class UserRegistrationView(generics.CreateAPIView): #Provides a post method for handling registration
     serializer_class = UserRegistrationSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [AllowAny] # any person can register
 
     
     def create(self, request, *args, **kwargs):
         
-        serializer = self.get_serializer(data=request.data)
+        serializer = self.get_serializer(data=request.data) # get the serializer instance from the request object and return it as a serializer
         
         if serializer.is_valid():
             serializer.save()
             # Create a token for the newly created user
-            token, created = Token.objects.get_or_create(user=serializer.instance)
+            token, created = Token.objects.get_or_create(user=serializer.instance) # creates a token for the newly created user
             return Response({
                 "user": serializer.data,
                 "token": token.key,
@@ -38,7 +38,7 @@ class UserRegistrationView(generics.CreateAPIView): #Provides a post method for 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class UserListViewSet(viewsets.ModelViewSet):
+class UserListViewSet(viewsets.ModelViewSet): # this allows the admin to see the list of users
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [IsAdminUser] # access only for admin users
@@ -62,18 +62,18 @@ class MovieReviewViewSet(viewsets.ModelViewSet):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
     filter_backends = [SearchFilter, OrderingFilter, DjangoFilterBackend]
-    search_fields = ['movie__title'] # allows users to search movie review by movie titles and rating
+    search_fields = ['movie__title'] # allows users to search movie review by movie titles
     filterset_fields = ['movie__title','rating'] # allowers filtering by movie title and rating
-    ordering_fields = ['rating','created_date'] # allows users to sort movie reviews by rating and date created
+    ordering_fields = ['rating'] # allows users to sort movie reviews by rating 
 
   
 
     def perform_create(self , serializer): # creating a moviereview
-        serializer.save(user=self.request.user)
+        serializer.save(user=self.request.user) # save the movie review 
 
     @action(detail=True,methods=['post'],permission_classes=[IsAuthenticated])
-    def like(self, request,pk=None):
-        review = self.get_object()
+    def like(self, request,pk=None): # like a movie review 
+        review = self.get_object() # get the movie review
         user = request.user
 
         if user in review.likes.all(): # check if user the user has already liked this review
@@ -84,8 +84,8 @@ class MovieReviewViewSet(viewsets.ModelViewSet):
             return  Response({'status': 'liked'},status=status.HTTP_200_OK)
         
     
-class ProfileView(generics.RetrieveUpdateAPIView):
-    queryset = User.objects.all()
+class ProfileView(generics.RetrieveUpdateAPIView): # allows users to retrieve their profile information and can update using the put method
+    queryset = User.objects.all() # get all the users
     serializer_class = ProfileSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -97,10 +97,10 @@ class ProfileView(generics.RetrieveUpdateAPIView):
 
     
 
-class MostlikedReviewViewSet(viewsets.ReadOnlyModelViewSet):
+class MostlikedReviewViewSet(viewsets.ReadOnlyModelViewSet): # allows retrieving the most liked review
     serializer_class = MoviereviewSerializer
 
-    def get_queryset(self):
+    def get_queryset(self): # gets the most liked review
         return Moviereview.objects.annotate(likes_count=models.Count('likes')).order_by('-likes_count')[:5] # gets the 5 most liked reviews
     
 class CommentViewSet(viewsets.ModelViewSet):

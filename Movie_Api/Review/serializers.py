@@ -15,7 +15,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
           fields = ['username', 'email', 'password','password2']
 
      def validate(self, data):
-                if data['password']!=data['password2']:
+                if data['password']!=data['password2']: # check password validity 
                     raise serializers.ValidationError("Passwords must match")
                 return data
           
@@ -24,7 +24,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
                     raise serializers.ValidationError("Username already exists")
                return value
      def validate_email(self, value):
-               if User.objects.filter(email__iexact=value).exists():
+               if User.objects.filter(email__iexact=value).exists(): # check email validity the ixact checks if the email is written in small format
                     raise serializers.ValidationError("Email already exists")
                return value
                
