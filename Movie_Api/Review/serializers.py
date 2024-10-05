@@ -54,7 +54,7 @@ class CommentSerializer(serializers.ModelSerializer):
      movie_name = serializers.CharField(source='review.movie.title',read_only = True)
      class Meta:
           model = Comment
-          fields = ['id','movie_name','review_content','content','user','review', 'created_date']
+          fields = ['id','movie_name','review_content','comment','user','review', 'created_date']
 
 
 
@@ -79,11 +79,11 @@ class MoviereviewSerializer(serializers.ModelSerializer):
                 raise serializers.ValidationError("Movie not found")
           return movie
     def create(self, validated_data):
-         movie = validated_data.pop('movie')
+         movie = validated_data.pop('movie') # this line extracts the movie from the validation data and returns it as value
          review = Moviereview.objects.create(movie=movie,**validated_data) # creates a new movie review and returns it
          return review
 
-    def get_likes_count(self, obj):
+    def get_likes_count(self, obj): # returns the number of likes that have been reviewed
          return obj.likes.count()
     
     def get_is_liked(self, obj):
