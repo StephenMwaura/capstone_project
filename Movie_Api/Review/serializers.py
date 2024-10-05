@@ -54,7 +54,7 @@ class CommentSerializer(serializers.ModelSerializer):
      movie_name = serializers.CharField(source='review.movie.title',read_only = True)
      class Meta:
           model = Comment
-          fields = ['id','movie_name','review_content','comment','user','review', 'created_date']
+          fields = ['id','movie_name','review_content','content','user','review', 'created_date']
 
 
 
