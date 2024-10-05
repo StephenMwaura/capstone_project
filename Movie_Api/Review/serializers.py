@@ -49,7 +49,6 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
-     created_date = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
      user = serializers.CharField(source='user.username',read_only=True)
      review_content = serializers.CharField(source='review.review_content',read_only = True) # displays the movie title as a string field
      movie_name = serializers.CharField(source='review.movie.title',read_only = True)
