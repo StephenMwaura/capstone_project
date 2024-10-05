@@ -36,12 +36,13 @@ class UserRegistrationView(generics.CreateAPIView): #Provides a post method for 
         
         # Return error response if data is invalid
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+    
 
 class UserListViewSet(viewsets.ModelViewSet): # this allows the admin to see the list of users
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [IsAdminUser] # access only for admin users
+
 
 class MovieViewSet(viewsets.ModelViewSet):
     queryset = Movie.objects.all()

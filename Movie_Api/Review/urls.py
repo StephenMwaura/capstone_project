@@ -1,5 +1,5 @@
 from django.urls import path,include
-from .views import MovieViewSet, MovieReviewViewSet ,UserListViewSet, ProfileView, MostlikedReviewViewSet, CommentViewSet ,UserRegistrationView
+from .views import MovieViewSet, MovieReviewViewSet, ProfileView, MostlikedReviewViewSet,UserListViewSet, CommentViewSet ,UserRegistrationView
 from rest_framework.routers import DefaultRouter
 
 
@@ -9,7 +9,8 @@ router.register(r'moviereviews',MovieReviewViewSet, basename='moviereviews')
 router.register(r'movies', MovieViewSet, basename='movies')
 router.register(r'mostliked', MostlikedReviewViewSet, basename='mostliked')
 router.register(r'comments', CommentViewSet, basename='comments')
-router.register(r'userlist', UserListViewSet, basename='user_list')
+router.register(r'userlist', UserListViewSet, basename='userlist')
+
 urlpatterns = [
     # path('register/', UserView.as_view(), name='register'),
     path('profile/',ProfileView.as_view(), name='profile'),
