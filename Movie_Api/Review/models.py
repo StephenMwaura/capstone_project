@@ -7,6 +7,7 @@ class Movie(models.Model):
     title = models.CharField(max_length=50 ,unique=True)
     description = models.CharField(max_length=400)
     release_date = models.DateField()
+    user = models.ForeignKey(User,on_delete=models.CASCADE,related_name='movies')
  
     def __str__(self):
         return self.title

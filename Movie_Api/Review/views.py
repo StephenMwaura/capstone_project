@@ -51,7 +51,7 @@ class MovieViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated,IsAuthorOrReadOnly]
 
     def perform_create(self, serializer):
-        serializer.save()
+        serializer.save(user=self.request.user)
 
 class MovieReviewViewSet(viewsets.ModelViewSet):
     queryset = Moviereview.objects.all()
