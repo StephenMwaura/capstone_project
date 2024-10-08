@@ -66,7 +66,7 @@ class MovieReviewViewSet(viewsets.ModelViewSet):
   
 
     def perform_create(self , serializer): # creating a moviereview
-        serializer.save()
+        serializer.save(user=self.request.user) # save the movie review object 
 
     @action(detail=True,methods=['post'],permission_classes=[IsAuthenticated])
     def like(self, request,pk=None): # like a movie review 
