@@ -12,7 +12,7 @@ router.register(r'comments', CommentViewSet, basename='comments')
 router.register(r'userlist', UserListViewSet, basename='userlist')
 
 urlpatterns = [
-    # path('register/', UserView.as_view(), name='register'),
+   
     path('profile/',ProfileView.as_view(), name='profile'),
     path('register/',UserRegistrationView.as_view(), name='register'),
     path('', include(router.urls))
