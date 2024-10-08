@@ -48,10 +48,10 @@ class MovieViewSet(viewsets.ModelViewSet):
     queryset = Movie.objects.all()
     serializer_class = MovieSerializer
     authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated,IsAuthorOrReadOnly]
+    permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        serializer.save()
 
 class MovieReviewViewSet(viewsets.ModelViewSet):
     queryset = Moviereview.objects.all()
