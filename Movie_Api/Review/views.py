@@ -49,10 +49,6 @@ class MovieViewSet(viewsets.ModelViewSet):
     serializer_class = MovieSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated,IsAuthorOrReadOnly]
-    
-    
-
-        
 
     def perform_create(self, serializer):
         serializer.save()
